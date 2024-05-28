@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "380884727756",
+    "project_id": "deaon-c7671",
+    "storage_bucket": "deaon-c7671.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:380884727756:android:56da3f96835c4e2351cf69",
+        "android_client_info": {
+          "package_name": "com.example.deaon_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "380884727756-hobietspg5ah04dso8uablpufspj2vv5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYmbzpCsSPXZ0VkGvRiltWIOesgKC8sio"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "380884727756-hobietspg5ah04dso8uablpufspj2vv5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "380884727756-6bpf77rubqm19ijeaffm3p6so80diu93.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.deaonb.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:380884727756:android:96c9e8c5c2f4526251cf69",
+        "android_client_info": {
+          "package_name": "com.example.deaonb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "380884727756-hobietspg5ah04dso8uablpufspj2vv5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYmbzpCsSPXZ0VkGvRiltWIOesgKC8sio"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "380884727756-hobietspg5ah04dso8uablpufspj2vv5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "380884727756-6bpf77rubqm19ijeaffm3p6so80diu93.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.deaonb.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
