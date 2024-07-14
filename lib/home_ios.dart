@@ -12,6 +12,7 @@ import 'artistpage.dart';
 import 'search.dart';
 import 'LikePage.dart';
 import 'mypage.dart';
+import 'HistoryPage.dart';
 import 'providers/current_song_provide.dart';
 import 'package:provider/provider.dart';
 
@@ -53,7 +54,7 @@ class _HomeiosState extends State<Homeios> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('iOS版ホーム画面'),
+        title: Text('digOn'),
       ),
       body: Center(
         child: currentSongProvider.selectedSongUrl == null
@@ -76,14 +77,19 @@ class _HomeiosState extends State<Homeios> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       IconButton(
+                        iconSize: 35, // アイコンサイズを大きくする
                         icon: Icon(Icons.skip_previous),
+                        color: Color.fromARGB(255, 31, 184, 227), // ボタンの色を青にする
                         onPressed: () => currentSongProvider.backSong(),
                       ),
+                      SizedBox(width: 20), // ボタン間のスペースを追加
                       IconButton(
+                        iconSize: 35, // アイコンサイズを大きくする
                         icon: Icon(
                             currentSongProvider.isPlayingFromSource('home')
                                 ? Icons.pause
                                 : Icons.play_arrow),
+                        color: Color.fromARGB(255, 31, 184, 227), // ボタンの色を青にする
                         onPressed: () {
                           if (currentSongProvider.isPlayingFromSource('home')) {
                             currentSongProvider.pauseMusic('home');
@@ -99,12 +105,18 @@ class _HomeiosState extends State<Homeios> {
                           }
                         },
                       ),
+                      SizedBox(width: 20), // ボタン間のスペースを追加
                       IconButton(
+                        iconSize: 35, // アイコンサイズを大きくする
                         icon: Icon(Icons.skip_next),
+                        color: Color.fromARGB(255, 31, 184, 227), // ボタンの色を青にする
                         onPressed: () => currentSongProvider.nextSong(),
                       ),
+                      SizedBox(width: 30), // ボタン間のスペースを追加
                       IconButton(
+                        iconSize: 25, // アイコンサイズを大きくする
                         icon: Icon(Icons.download),
+                        color: Color.fromARGB(255, 31, 184, 227), // ボタンの色を青にする
                         onPressed: () {
                           // コンテキストをメソッドに渡す
                           Provider.of<CurrentSongProvider>(context,
@@ -130,7 +142,7 @@ class _HomeiosState extends State<Homeios> {
                                           Duration(seconds: value.toInt()));
                                     }
                                   : null, // ホームからの再生時のみ有効
-                              activeColor: Color.fromARGB(255, 244, 135, 2),
+                              activeColor: Color.fromARGB(255, 31, 184, 227),
                               inactiveColor: Colors.grey),
                         if (music.playingSource == 'home')
                           Text(
@@ -194,7 +206,44 @@ class _HomeiosState extends State<Homeios> {
                                 currentSongProvider.selectedArtistName!),
                       ),
                     ),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromARGB(255, 92, 206, 238)),
+                      foregroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
+                      padding: MaterialStateProperty.all<EdgeInsets>(
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 20)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                      ),
+                      elevation: MaterialStateProperty.all<double>(5.0),
+                    ),
                     child: Text('アーティストページへ'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HistoryPage(),
+                      ),
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromARGB(255, 87, 203, 235)),
+                      foregroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
+                      padding: MaterialStateProperty.all<EdgeInsets>(
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 20)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                      ),
+                      elevation: MaterialStateProperty.all<double>(5.0),
+                    ),
+                    child: Text('履歴ページへ'),
                   ),
                 ],
               ),

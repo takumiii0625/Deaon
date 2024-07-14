@@ -24,9 +24,23 @@ class MusicDetailScreen extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Expanded(
+              flex: 4,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  Align(
+                    alignment: Alignment(-0.8, 0.0),
+                    child: IconButton(
+                      icon: Icon(Icons.keyboard_arrow_down, size: 40),
+                      color: Color.fromARGB(255, 6, 3, 3), // アイコンの色を白に設定
+                      onPressed: () {
+                        // 音楽詳細画面を閉じてコントロールバーに戻る
+                        Navigator.of(context).pop();
+                        songProvider
+                            .setMusicStarted(true); // コントロールバーを再表示するために状態を更新
+                      },
+                    ),
+                  ),
                   // 曲のイメージ表示
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -64,42 +78,48 @@ class MusicDetailScreen extends StatelessWidget {
             Text(
               "${formatDuration(songProvider.currentPosition)} / ${formatDuration(songProvider.songDuration)}",
             ),
-            // コントロールボタン
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.skip_previous),
-                  onPressed: () => songProvider.playPreviousDownload(),
-                ),
-                IconButton(
-                  icon: Icon(
-                    songProvider.isPlaying ? Icons.pause : Icons.play_arrow,
+            Expanded(
+              flex: 1, // このflex値を減らすことで、コントロールボタンを上に移動させる
+              child:
+                  // コントロールボタン
+                  Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.skip_previous),
+                    onPressed: () => songProvider.playPreviousDownload(),
                   ),
-                  onPressed: () {
-                    if (songProvider.isPlaying) {
-                      songProvider.pauseDownloadMusic(); // 一時停止と再生位置の保存
-                    } else {
-                      songProvider.resumeDownloadMusic(); // 保存した位置からの再生
-                    }
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.skip_next),
-                  onPressed: () => songProvider.playNextDownload(),
-                ),
-                // 小さくするボタン
-                IconButton(
-                  icon: Icon(Icons.keyboard_arrow_down),
-                  color: Color.fromARGB(255, 3, 3, 3), // アイコンの色を白に設定
-                  onPressed: () {
-                    // 音楽詳細画面を閉じてコントロールバーに戻る
-                    Navigator.of(context).pop();
-                    songProvider
-                        .setMusicStarted(true); // コントロールバーを再表示するために状態を更新
-                  },
-                ),
-              ],
+                  IconButton(
+                    icon: Icon(
+                      songProvider.isPlaying ? Icons.pause : Icons.play_arrow,
+                    ),
+                    onPressed: () {
+                      if (songProvider.isPlaying) {
+                        songProvider.pauseDownloadMusic(); // 一時停止と再生位置の保存
+                      } else {
+                        songProvider.resumeDownloadMusic(); // 保存した位置からの再生
+                      }
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.skip_next),
+                    onPressed: () => songProvider.playNextDownload(),
+                  ),
+                  // 小さくするボタン
+                  /*
+                  IconButton(
+                    icon: Icon(Icons.keyboard_arrow_down),
+                    color: Color.fromARGB(255, 3, 3, 3), // アイコンの色を白に設定
+                    onPressed: () {
+                      // 音楽詳細画面を閉じてコントロールバーに戻る
+                      Navigator.of(context).pop();
+                      songProvider
+                          .setMusicStarted(true); // コントロールバーを再表示するために状態を更新
+                    },
+                  ),
+                  */
+                ],
+              ),
             ),
           ],
         ),

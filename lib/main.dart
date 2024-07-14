@@ -61,13 +61,7 @@ class MyAppHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Home_ios',
-      home: Scaffold(
-        body: Stack(
-          children: [
-            MainScreen(), // ホーム画面のウィジェット
-          ],
-        ),
-      ),
+      home: SplashScreen(), // スプラッシュスクリーンを最初に表示
     );
   }
 }
@@ -81,6 +75,37 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/login': (_) => new Login(),
       },
+    );
+  }
+}
+
+class SplashScreen extends StatefulWidget {
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 3), () {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) {
+          final currentSongProvider =
+              Provider.of<CurrentSongProvider>(context, listen: false);
+          currentSongProvider.initializeProvider(autoPlay: true); // 自動再生を有効にする
+          return MainScreen();
+        }),
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Image.asset('assets/splash_image.png'), // スプラッシュ画像を表示
+      ),
     );
   }
 }
@@ -111,6 +136,10 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
     // フレームワークがフレームの描画を終えた後に、お気に入りの状態をロードする
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      final currentSongProvider =
+          Provider.of<CurrentSongProvider>(context, listen: false);
+      currentSongProvider.initializeProvider(autoPlay: false); // ここでは自動再生しない
+
       Provider.of<CurrentSongProvider>(context, listen: false).loadFavorites();
     });
   }
@@ -139,7 +168,7 @@ class _MainScreenState extends State<MainScreen> {
                 },
                 child: Container(
                   height: 100, // コントロールバーの高さを100に調整
-                  color: Color.fromARGB(255, 8, 8, 8)
+                  color: Color.fromARGB(255, 3, 181, 252)
                       .withOpacity(0.7), // 高級感のある濃い青色に変更
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -176,17 +205,19 @@ class _MainScreenState extends State<MainScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           IconButton(
-                            iconSize: 20, // アイコンサイズを大きくする
+                            iconSize: 30, // アイコンサイズを大きくする
                             icon: Icon(Icons.skip_previous,
-                                color: Color(0xFFFFAB91)), // サーモンピンク色に変更
+                                color: Color.fromARGB(
+                                    255, 255, 255, 255)), // サーモンピンク色に変更
                             onPressed: () =>
                                 songProvider.playPreviousDownload(),
                           ),
                           IconButton(
-                            iconSize: 20, // アイコンサイズを大きくする
+                            iconSize: 30, // アイコンサイズを大きくする
                             icon: Icon(
                                 isPlaying ? Icons.pause : Icons.play_arrow,
-                                color: Color(0xFF80DEEA)), // 淡い青色に変更
+                                color: Color.fromARGB(
+                                    255, 251, 254, 254)), // 淡い青色に変更
                             onPressed: () {
                               if (isPlaying) {
                                 songProvider
@@ -197,13 +228,14 @@ class _MainScreenState extends State<MainScreen> {
                             },
                           ),
                           IconButton(
-                            iconSize: 20, // アイコンサイズを大きくする
+                            iconSize: 30, // アイコンサイズを大きくする
                             icon: Icon(Icons.skip_next,
                                 color: Color.fromARGB(
-                                    255, 238, 135, 8)), // ラベンダー色に変更
+                                    255, 245, 247, 248)), // ラベンダー色に変更
                             onPressed: () => songProvider.playNextDownload(),
                           ),
                           IconButton(
+                            iconSize: 30, // アイコンサイズを大きくする
                             icon: Icon(Icons
                                 .keyboard_arrow_up), // Material Icons の矢印アップ
                             color: Colors.white,
@@ -219,7 +251,7 @@ class _MainScreenState extends State<MainScreen> {
                           Align(
                             alignment: Alignment.topRight,
                             child: IconButton(
-                              iconSize: 20, // アイコンサイズを大きくする
+                              iconSize: 30, // アイコンサイズを大きくする
                               icon: Icon(Icons.close, color: Colors.white),
                               onPressed: () {
                                 songProvider
@@ -245,7 +277,7 @@ class _MainScreenState extends State<MainScreen> {
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'マイページ'),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: Color.fromARGB(255, 2, 194, 247),
         unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,
       ),

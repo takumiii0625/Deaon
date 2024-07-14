@@ -173,7 +173,7 @@ class _SearchPageState extends State<SearchPage> {
                           value: 2,
                           child: Row(
                             children: [
-                              Icon(Icons.arrow_forward), // Artist Page用のアイコン
+                              Icon(Icons.person), // Artist Page用のアイコン
                               SizedBox(width: 8), // アイコンとテキストの間隔
                               Text('Artist Page'),
                             ],

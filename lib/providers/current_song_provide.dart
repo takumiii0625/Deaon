@@ -30,7 +30,6 @@ class CurrentSongProvider with ChangeNotifier {
   String? _selectedSongTitle;
   String? _selectedArtistName;
   String? _selectedImageUrl;
-
   //再生時間
 
   // 再生時間
@@ -114,11 +113,19 @@ class CurrentSongProvider with ChangeNotifier {
   CurrentSongProvider() {
     initializeHomePlayer();
     initializeDownloadPlayer();
-    initializeProvider(); // Initialize the provider
   }
 
-  void initializeProvider() {
-    fetchSongIfNeeded(); // 初期曲の取得
+  Future<void> initializeProvider({bool autoPlay = false}) async {
+    if (autoPlay) {
+      await fetchSongIfNeeded(); // 自動再生を有効にする場合、ランダムな曲を取得
+    }
+    notifyListeners();
+  }
+
+  Future<void> fetchSongIfNeeded() async {
+    if (_selectedSongUrl == null) {
+      await fetchRandomSong();
+    }
   }
 
 // Home Playerのリスナーをセットアップ
@@ -310,12 +317,6 @@ class CurrentSongProvider with ChangeNotifier {
         print(
             "No last position recorded or player not paused, and no song URL available.");
       }
-    }
-  }
-
-  void fetchSongIfNeeded() {
-    if (selectedSongUrl == null) {
-      fetchRandomSong();
     }
   }
 
@@ -1209,5 +1210,20 @@ class CurrentSongProvider with ChangeNotifier {
         notifyListeners();
       }
     });
+  }
+
+  //履歴ページーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+  Future<List<Map<String, dynamic>>> fetchSongsFromHistory() async {
+    List<Map<String, dynamic>> songDetails = [];
+    for (String songId in _songHistory.reversed.take(10)) {
+      final docSnapshot = await FirebaseFirestore.instance
+          .collection('uploads')
+          .doc(songId)
+          .get();
+      if (docSnapshot.exists) {
+        songDetails.add(docSnapshot.data() as Map<String, dynamic>);
+      }
+    }
+    return songDetails;
   }
 }
